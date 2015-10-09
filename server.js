@@ -1,8 +1,8 @@
 var express   = require('express'),
     PORT      = process.env.PORT || 3001,
     server    = express(),
-    MONGOURI  = process.env.MONGOLAB_URI,
-    dbname    = "some_useful_name"
+    MONGOURI  = process.env.MONGOLAB_URI || "mongodb://localhost:27017",
+    dbname    = "some_useful_name",
     mongoose  = require('mongoose');
 
 server.get('/secret-test', function (req, res) {
