@@ -1,0 +1,11 @@
+<h1> Welcome </h1>
+<% threads.forEach(function (topic, i) { %>
+  <div class = "thread">
+    <h3>
+      <a href="/threads/<%= thread._id %>"><%= thread.name %> </a>
+    </h3>
+  </div>
+<% }) %>
+<h4>
+  <a href="/threads/new"> Make a new thread</a>
+</h4>
