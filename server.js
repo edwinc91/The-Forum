@@ -12,10 +12,13 @@ var express         = require('express'),
     session         = require('express-session');
 
 var threadSchema = new Schema({
-  title: { type: String, required: true },
-  author: { type: String, required: true },
+  title: { type: String, //required: true
+  },
+  author: { type: String, //required: true
+  },
   date: Date,
-  body: { type: String, required: true },
+  body: { type: String, //required: true
+  },
   comments: [{ author: String, body: String, date: Date }]
 }, {collection: 'forum_thread_list', strict: true});
 
@@ -64,6 +67,19 @@ server.get('/threads/:id', function (req, res) {
       res.render('showthread', {
         thread: aSpecificThread
       });
+    }
+  });
+});
+
+server.post('/', function (req, res) {
+  console.log(req.body.thread)
+  var threadOptions = req.body.thread;
+  var newThread = new Thread(threadOptions);
+  newThread.save(function (err, threadInputtedIn) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.redirect(302, "/");
     }
   });
 });

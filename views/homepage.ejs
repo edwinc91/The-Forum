@@ -1,8 +1,8 @@
 <h1> Welcome </h1>
-<% threads.forEach(function (topic, i) { %>
+<% threads.forEach(function (thread, i) { %>
   <div class = "thread">
     <h3>
-      <a href="/threads/<%= thread._id %>"><%= thread.name %> </a>
+      <a href="/threads/<%= thread._id %>"><%= thread.title %> </a>
     </h3>
   </div>
 <% }) %>
