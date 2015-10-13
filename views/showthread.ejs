@@ -1,7 +1,21 @@
 <div class="specificthread">
-  <h3><%= thread.title %><h3>
-  <h4>Posted By: <%= thread.author %><h4>
-  <h5>Date Created: <%= thread.date %><h5>
-  <h6><%= thread.body %><h6>
+  <h3><%= thread.title %></h3>
+  <h4>Posted By: <%= thread.author %></h4>
+  <h5>Date Created: <%= thread.date %></h5>
+  <h6><%= thread.body %></h6>
+  <% if (thread.comments) { %>
+      <% for (var i = 0; i < thread.comments.length; i++) { %>
+          <h6><%= thread.comments[i] %></h6>
+      <% } %>
+  <% } else { %>
+      <h6>There are currently no comments</h6>
+  <% } %>
 </div>
+<div>
+  <form action="/threads/<%= thread._id %>?_method=PATCH" method="post">
+    <input type="text"
+           name="thread[comments][]"
+           placeholder="comment"><br/>
+    <input type="submit" value="Post Comment">
+  </form>
 <a href="/">Back to Homepage</a>

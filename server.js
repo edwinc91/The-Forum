@@ -37,11 +37,24 @@ server.listen(PORT, function () {
 server.set('views', './views');
 server.set('view engine', 'ejs');
 
+server.use(session({
+  secret: "thisismysecretysecret",
+  resave: true,
+  saveUninitialized: true
+}));
+
 server.use(express.static('./public'));
 server.use(expressLayouts);
 server.use(methodOverride('_method'));
 
 server.use(bodyParser.urlencoded({ extended: true }));
+
+server.use(function (req, res, next) {
+  console.log("REQ DOT BODY", req.body);
+  console.log("REQ DOT SESSION", req.session);
+
+  next();
+});
 
 server.get('/', function (req, res) {
   Thread.find({}, function (err, allThreads) {
@@ -57,6 +70,21 @@ server.get('/', function (req, res) {
 
 server.get('/threads/new', function (req, res) {
   res.render('newthread');
+});
+
+server.patch('/threads/:id', function (req, res) {
+  var threadOptions = req.body.thread;
+  console.log(threadOptions)
+
+  threadOptions.comments = threadOptions.comments.toString();
+
+  Thread.findByIdAndUpdate(req.params.id, threadOptions, function (err, threadWithComment) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.redirect(302, "/threads/" + threadWithComment._id);
+    }
+  });
 });
 
 server.get('/threads/:id', function (req, res) {
