@@ -99,6 +99,14 @@ server.get('/threads/:id', function (req, res) {
   });
 });
 
+server.get('/login', function (req, res) {
+  res.render('login');
+})
+
+server.get('/register', function (req, res) {
+  res.render('register');
+})
+
 server.post('/', function (req, res) {
   console.log(req.body.thread)
   var threadOptions = req.body.thread;
