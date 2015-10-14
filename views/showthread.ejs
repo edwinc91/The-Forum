@@ -1,4 +1,4 @@
-<div class="specificthread">
+<div id="specificthread">
   <h3><%= thread.title %></h3>
   <h4>Posted By: <%= thread.author %></h4>
   <h5>Date Created: <%= thread.date %></h5>
@@ -12,10 +12,14 @@
   <% } %>
 </div>
 <div>
-  <form action="/threads/<%= thread._id %>?_method=PATCH" method="post">
+  <form action="/threads/<%= thread._id %>/comments?_method=PATCH" method="post">
     <input type="text"
-           name="thread[comments][]"
+           name="thread[comments]"
            placeholder="comment"><br/>
     <input type="submit" value="Post Comment">
+  </form>
+  <form action="/threads/<%= thread._id %>?_method=DELETE"
+      method="post">
+  <input type="submit" value="Delete Thread">
   </form>
 <a href="/">Back to Homepage</a>

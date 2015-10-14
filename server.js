@@ -19,10 +19,18 @@ var threadSchema = new Schema({
   date: Date,
   body: { type: String, //required: true
   },
-  comments: [{ author: String, body: String, date: Date }]
+  //comments: [{ author: String, body: String, date: Date }]
+  comments: [String]
 }, {collection: 'forum_thread_list', strict: true});
 
 var Thread = mongoose.model(null, threadSchema);
+
+var userSchema = new Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true}
+}, {strict: true});
+
+var User = mongoose.model("User", userSchema);
 
 server.get('/secret-test', function (req, res) {
   res.write("Welcome to this app");
@@ -61,28 +69,62 @@ server.get('/', function (req, res) {
     if (err) {
       console.log(err)
     } else {
-      res.render('homepage', {
-      threads: allThreads
-      });
+      if (req.session.currentUser == undefined) {
+        res.render('homepage', {
+        threads: allThreads
+        });
+      } else {
+        res.render('logged_in_home_page', {
+          threads: allThreads
+        });
+      };
     }
   });
 });
 
 server.get('/threads/new', function (req, res) {
-  res.render('newthread');
+  if (req.session.currentUser == undefined) {
+    res.render('login');
+  } else {
+    res.render('newthread');
+  }
 });
 
-server.patch('/threads/:id', function (req, res) {
-  var threadOptions = req.body.thread;
-  console.log(threadOptions)
+server.patch('/threads/:id/comments', function (req, res) {
+  // var threadOptions = req.body.thread;
+  // console.log('!!!!!!!!!!!!!!');
+  // console.log(threadOptions)
+  // console.log('!!!!!!!!!!!!!!');
 
-  threadOptions.comments = threadOptions.comments.toString();
+  var threadComments = {$push: {comments: req.body.thread.comments}}
 
-  Thread.findByIdAndUpdate(req.params.id, threadOptions, function (err, threadWithComment) {
+  Thread.findByIdAndUpdate(req.params.id, threadComments, function (err, threadWithComment) {
     if (err) {
       console.log(err)
     } else {
       res.redirect(302, "/threads/" + threadWithComment._id);
+    }
+  });
+});
+
+server.patch('/threads/:id/edit', function (req, res) {
+  var threadEdit = req.body.thread;
+
+  Thread.findByIdAndUpdate(req.params.id, threadEdit, function (err, updatedThread) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect(302, "/threads/" + updatedThread._id);
+    }
+  });
+});
+
+server.delete('/threads/:id', function (req, res) {
+  Thread.findByIdAndRemove(req.params.id, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect(302, '/');
     }
   });
 });
@@ -103,17 +145,37 @@ server.get('/login', function (req, res) {
   res.render('login');
 })
 
-server.get('/register', function (req, res) {
-  res.render('register');
-})
+server.post('/login', function (req, res) {
+  var attempt = req.body.user;
+
+  User.findOne({ username: attempt.username }, function (err, user) {
+    if (user && user.password === attempt.password) {
+      req.session.currentUser = user.username;
+      res.redirect(302, "/");
+    } else {
+      res.redirect(302, '/login');
+    };
+  });
+});
 
 server.post('/', function (req, res) {
-  console.log(req.body.thread)
+  var newUser = User(req.body.user);
+  newUser.save(function (err, user) {
+    res.redirect(301, "/users/" + user._id);
+  });
+});
+
+server.get('/register', function (req, res) {
+  res.render('register');
+});
+
+server.post('/', function (req, res) {
   var threadOptions = req.body.thread;
   var newThread = new Thread(threadOptions);
+  newThread.author = req.session.currentUser;
   newThread.save(function (err, threadInputtedIn) {
     if (err) {
-      console.log(err)
+      console.log(err);
     } else {
       res.redirect(302, "/");
     }
