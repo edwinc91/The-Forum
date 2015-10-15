@@ -67,7 +67,11 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.get('/thread', function (req, res) {
   Thread.find({}, function (err, allThreads) {
     res.render('logged_in_home_page', {
-      threads: allThreads
+      threads: allThreads,
+      currentUser: req.session.user,
+      logOut: function () {
+        this.currentUser.username = '74382942892747384729342LOGMEOUT';
+      }
     });
   })
 });
@@ -184,7 +188,7 @@ server.post('/register', function (req, res) {
 });
 
 server.get('/', function (req, res) {
-  // console.log(req.session);
+  console.log(req.session);
   Thread.find({}, function (err, allThreads) {
     if (err) {
       console.log(err)
