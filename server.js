@@ -33,7 +33,7 @@ var userSchema = new Schema({
 var User = mongoose.model("User", userSchema);
 
 server.get('/secret-test', function (req, res) {
-  res.write("Welcome to this app");
+  res.write("Welcome to this app bitchezzzzzz");
   res.end();
 });
 
@@ -46,9 +46,9 @@ server.set('views', './views');
 server.set('view engine', 'ejs');
 
 server.use(session({
-  secret: "thisismysecretysecret",
+  secret: "thisismysecretysecretduuudeyou'renevergonnafindthisoutsodonteventryyyn00000b",
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: false
 }));
 
 server.use(express.static('./public'));
@@ -57,44 +57,30 @@ server.use(methodOverride('_method'));
 
 server.use(bodyParser.urlencoded({ extended: true }));
 
-server.use(function (req, res, next) {
-  console.log("REQ DOT BODY", req.body);
-  console.log("REQ DOT SESSION", req.session);
+// server.use(function (req, res, next) {
+//   console.log("REQ DOT BODY", req.body);
+//   console.log("REQ DOT SESSION", req.session);
+//
+//   next();
+// });
 
-  next();
-});
-
-server.get('/', function (req, res) {
+server.get('/thread', function (req, res) {
   Thread.find({}, function (err, allThreads) {
-    if (err) {
-      console.log(err)
-    } else {
-      if (req.session.currentUser == undefined) {
-        res.render('homepage', {
-        threads: allThreads
-        });
-      } else {
-        res.render('logged_in_home_page', {
-          threads: allThreads
-        });
-      };
-    }
-  });
+    res.render('homepage', {
+      threads: allThreads
+    });
+  })
 });
 
 server.get('/threads/new', function (req, res) {
-  if (req.session.currentUser == undefined) {
+  if (req.session.user == undefined) {
     res.render('login');
   } else {
-    res.render('newthread');
+    res.render('newthread', { author: req.session.user.name });
   }
 });
 
 server.patch('/threads/:id/comments', function (req, res) {
-  // var threadOptions = req.body.thread;
-  // console.log('!!!!!!!!!!!!!!');
-  // console.log(threadOptions)
-  // console.log('!!!!!!!!!!!!!!');
 
   var threadComments = {$push: {comments: req.body.thread.comments}}
 
@@ -135,7 +121,8 @@ server.get('/threads/:id', function (req, res) {
       console.log(err)
     } else {
       res.render('showthread', {
-        thread: aSpecificThread
+        thread: aSpecificThread,
+        // author: aSpecificThread.author
       });
     }
   });
@@ -148,36 +135,75 @@ server.get('/login', function (req, res) {
 server.post('/login', function (req, res) {
   var attempt = req.body.user;
 
-  User.findOne({ username: attempt.username }, function (err, user) {
+  User.findOne({ username: attempt.name }, function (err, user) {
     if (user && user.password === attempt.password) {
-      req.session.currentUser = user.username;
-      res.redirect(302, "/");
+      req.session.user = user;
+      res.redirect(302, "/thread");
     } else {
       res.redirect(302, '/login');
     };
   });
 });
 
-server.post('/', function (req, res) {
-  var newUser = User(req.body.user);
-  newUser.save(function (err, user) {
-    res.redirect(301, "/users/" + user._id);
-  });
+server.post('/', function (req, res, next) {
+  req.session.user = req.body.user
+//   if (req.session.user == undefined) {
+//     res.redirect(302, "/login");
+//   } else {
+//     next();
+//   }
+console.log(req.session)
+res.redirect(302, '/')
 });
 
 server.get('/register', function (req, res) {
   res.render('register');
 });
 
-server.post('/', function (req, res) {
-  var threadOptions = req.body.thread;
-  var newThread = new Thread(threadOptions);
-  newThread.author = req.session.currentUser;
-  newThread.save(function (err, threadInputtedIn) {
+server.post('/register', function (req, res) {
+  var newUser = User(req.body.user);
+  newUser.save(function (err, userRandom) {
+    console.log("!!!!!!!!!");
+    console.log(newUser);
+    console.log("!!!!!!!!!");
     if (err) {
       console.log(err);
     } else {
-      res.redirect(302, "/");
+    res.redirect(302, "/login");
+    }
+  });
+});
+
+server.get('/', function (req, res) {
+  console.log(req.session);
+  Thread.find({}, function (err, allThreads) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.render('homepage', {
+      threads: allThreads
+      });
+    }
+  });
+});
+
+server.post('/thread', function (req, res) {
+  // if (req.body.thread == undefined) {
+  //   console.log("what is going on" + req.session, req.body);
+  //   res.redirect(302, "/");
+  // } else {
+  var newThread = new Thread({
+    // req.body.thread
+    title: req.body.thread.title,
+    author: req.session.user.name,
+    content: req.body.thread.body,
+    date: req.body.thread.date
+  });
+  newThread.save(function (err, newThreadSaved) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect(302, "/thread");
     }
   });
 });
