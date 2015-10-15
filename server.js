@@ -196,7 +196,7 @@ server.post('/thread', function (req, res) {
     // req.body.thread
     title: req.body.thread.title,
     author: req.session.user.name,
-    content: req.body.thread.body,
+    body: req.body.thread.body,
     date: req.body.thread.date
   });
   newThread.save(function (err, newThreadSaved) {
