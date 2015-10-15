@@ -126,6 +126,7 @@ server.get('/threads/:id', function (req, res) {
     } else {
       res.render('showthread', {
         thread: aSpecificThread,
+        currentUser: req.session.user
         // author: aSpecificThread.author
       });
     }

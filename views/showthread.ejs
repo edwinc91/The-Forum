@@ -18,8 +18,15 @@
            placeholder="comment"><br/>
     <input type="submit" value="Post Comment">
   </form>
+<% if (currentUser == undefined) { %>
+  <a href="/">Back to Homepage</a>
+<% } else if (currentUser.username === thread.author) { %>
   <form action="/threads/<%= thread._id %>?_method=DELETE"
       method="post">
-  <input type="submit" value="Delete Thread">
+  <input type="submit" value="Delete Thread"><br/>
+  <a href="/thread">Back to Homepage</a>
+<% } else if (currentUser) { %>
+  <a href="/thread">Back to Homepage</a>
+<% } %>
   </form>
-<a href="/">Back to Homepage</a>
+</div>
