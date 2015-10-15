@@ -138,9 +138,9 @@ server.get('/login', function (req, res) {
 
 server.post('/login', function (req, res) {
   var attempt = req.body.user;
-  console.log("_________________________");
-  console.log(attempt);
-  console.log("_________________________");
+  // console.log("_________________________");
+  // console.log(attempt);
+  // console.log("_________________________");
   User.findOne({ username: attempt.name }, function (err, user) {
     if (err) {
       console.log(err);
@@ -160,7 +160,7 @@ server.post('/', function (req, res, next) {
 //   } else {
 //     next();
 //   }
-console.log(req.session)
+// console.log(req.session)
 res.redirect(302, '/thread')
 });
 
@@ -171,9 +171,9 @@ server.get('/register', function (req, res) {
 server.post('/register', function (req, res) {
   var newUser = User(req.body.user);
   newUser.save(function (err, userRandom) {
-    console.log("!!!!!!!!!");
-    console.log(newUser);
-    console.log("!!!!!!!!!");
+    // console.log("!!!!!!!!!");
+    // console.log(newUser);
+    // console.log("!!!!!!!!!");
     if (err) {
       console.log(err);
     } else {
@@ -183,7 +183,7 @@ server.post('/register', function (req, res) {
 });
 
 server.get('/', function (req, res) {
-  console.log(req.session);
+  // console.log(req.session);
   Thread.find({}, function (err, allThreads) {
     if (err) {
       console.log(err)
