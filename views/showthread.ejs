@@ -18,7 +18,7 @@
            placeholder="comment"><br/>
     <input type="submit" value="Post Comment">
   </form>
-<% if (currentUser == undefined || currentUser.username === "74382942892747384729342LOGMEOUT") { %>
+<% if (currentUser == undefined) { %>
   <a href="/">Back to Homepage</a>
 <% } else if (currentUser.username === thread.author) { %>
   <form action="/threads/<%= thread._id %>?_method=DELETE"

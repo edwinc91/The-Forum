@@ -68,10 +68,6 @@ server.get('/thread', function (req, res) {
   Thread.find({}, function (err, allThreads) {
     res.render('logged_in_home_page', {
       threads: allThreads,
-      currentUser: req.session.user,
-      logOut: function () {
-        this.currentUser.username = '74382942892747384729342LOGMEOUT';
-      }
     });
   })
 });
@@ -152,6 +148,7 @@ server.post('/login', function (req, res) {
     } else if (user && user.password === attempt.password) {
       req.session.user = user;
       res.redirect(302, "/thread");
+      console.log(req.session);
     } else {
       res.redirect(302, '/login');
     };
@@ -193,6 +190,7 @@ server.get('/', function (req, res) {
     if (err) {
       console.log(err)
     } else {
+      req.session.destroy();
       res.render('homepage', {
       threads: allThreads
       });
