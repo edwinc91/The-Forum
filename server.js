@@ -203,7 +203,7 @@ server.post('/thread', function (req, res) {
   var newThread = new Thread({
     // req.body.thread
     title: req.body.thread.title,
-    author: req.session.user.name,
+    author: req.session.user.username,
     body: req.body.thread.body,
     date: req.body.thread.date
   });
