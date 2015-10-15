@@ -1,10 +1,13 @@
 <h1> Welcome </h1>
 <% threads.forEach(function (thread, i) { %>
-  <div class = "thread">
+  <p class = "thread">
     <h3>
       <a href="/threads/<%= thread._id %>"><%= thread.title %> </a>
     </h3>
-  </div>
+    <h6>
+      <a href="/threads/<%= thread._id %>"><%= thread.comments.length %> comments </a>
+    </h6>
+  </p>
 <% }) %>
 <h6>
   <a href="/login">Log in</a>

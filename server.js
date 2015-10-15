@@ -2,7 +2,7 @@ var express         = require('express'),
     PORT            = process.env.PORT || 3001,
     server          = express(),
     MONGOURI        = process.env.MONGOLAB_URI || "mongodb://localhost:27017",
-    dbname          = "some_useful_name",
+    dbname          = "feddit",
     mongoose        = require('mongoose'),
     Schema          = mongoose.Schema,
     ejs             = require('ejs'),
@@ -12,13 +12,10 @@ var express         = require('express'),
     session         = require('express-session');
 
 var threadSchema = new Schema({
-  title: { type: String, //required: true
-  },
-  author: { type: String, //required: true
-  },
+  title: { type: String, required: true },
+  author: { type: String, required: true },
   date: Date,
-  body: { type: String, //required: true
-  },
+  body: { type: String, required: true },
   //comments: [{ author: String, body: String, date: Date }]
   comments: [String]
 }, {collection: 'forum_thread_list', strict: true});
