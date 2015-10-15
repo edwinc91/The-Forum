@@ -66,7 +66,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 server.get('/thread', function (req, res) {
   Thread.find({}, function (err, allThreads) {
-    res.render('homepage', {
+    res.render('logged_in_home_page', {
       threads: allThreads
     });
   })
@@ -110,7 +110,11 @@ server.delete('/threads/:id', function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.redirect(302, '/');
+      if (req.session.user) {
+        res.redirect(302, '/thread');
+      } else {
+        res.redirect(302, '/');
+      };
     }
   });
 });
@@ -134,9 +138,13 @@ server.get('/login', function (req, res) {
 
 server.post('/login', function (req, res) {
   var attempt = req.body.user;
-
+  console.log("_________________________");
+  console.log(attempt);
+  console.log("_________________________");
   User.findOne({ username: attempt.name }, function (err, user) {
-    if (user && user.password === attempt.password) {
+    if (err) {
+      console.log(err);
+    } else if (user && user.password === attempt.password) {
       req.session.user = user;
       res.redirect(302, "/thread");
     } else {
@@ -153,7 +161,7 @@ server.post('/', function (req, res, next) {
 //     next();
 //   }
 console.log(req.session)
-res.redirect(302, '/')
+res.redirect(302, '/thread')
 });
 
 server.get('/register', function (req, res) {
