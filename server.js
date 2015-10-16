@@ -14,10 +14,11 @@ var express         = require('express'),
 var threadSchema = new Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
-  date: Date,
+  date: { type: Date, default: Date.now },
   body: { type: String, required: true },
-  //comments: [{ author: String, body: String, date: Date }]
-  comments: [String]
+  comments: [{ author: String, body: String, date: { type: Date, default: Date.now }}],
+  // comments: [String],
+  likeCount: { type: Number, default: 0 }
 }, {collection: 'forum_thread_list', strict: true});
 
 var Thread = mongoose.model(null, threadSchema);
@@ -69,6 +70,18 @@ server.get('/thread', function (req, res) {
   })
 });
 
+server.get('/threads/trending', function (req, res) {
+  Thread.find().sort({votes:-1}).exec(function (err, trendingThreads) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('trending', {
+        threads: trendingThreads
+      });
+    }
+  });
+});
+
 server.get('/threads/new', function (req, res) {
   if (req.session.user == undefined) {
     res.render('login');
@@ -77,9 +90,25 @@ server.get('/threads/new', function (req, res) {
   }
 });
 
-server.patch('/threads/:id/comments', function (req, res) {
+server.get('/threads/:id/edit', function (req, res) {
+  Thread.findById(req.params.id, function (err, aSpecificThread) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.render('edit', {
+        thread: aSpecificThread,
+        currentUser: req.session.user
+      });
+    }
+  });
+});
 
-  var threadComments = {$push: {comments: req.body.thread.comments}}
+server.patch('/threads/:id/comments', function (req, res) {
+  console.log(req.session);
+  console.log(req.session.user.username);
+  console.log(req.body.thread);
+  var threadComments = {$push: {comments: { author: req.session.user.username, body: req.body.thread.comments }}};
+  // var threadComments = {$push: {comments: req.body.thread.comments}};
 
   Thread.findByIdAndUpdate(req.params.id, threadComments, function (err, threadWithComment) {
     if (err) {
@@ -98,6 +127,28 @@ server.patch('/threads/:id/edit', function (req, res) {
       console.log(err);
     } else {
       res.redirect(302, "/threads/" + updatedThread._id);
+    }
+  });
+});
+
+server.patch('/threads/:id/like', function (req, res) {
+  var likeIt = {$inc: { votes: req.body.thread.count } };
+  Thread.findByIdAndUpdate(req.params.id, likeIt, function (err, updatedThreadLikeCount) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect(302, "/threads/" + updatedThreadLikeCount._id);
+    }
+  });
+});
+
+server.patch('/threads/:id/dislike', function (req, res) {
+  var dislikeIt = {$inc: { votes: req.body.thread.count } };
+  Thread.findByIdAndUpdate(req.params.id, dislikeIt, function (err, updatedThreadLikeCount) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect(302, "/threads/" + updatedThreadLikeCount._id);
     }
   });
 });

@@ -1,11 +1,12 @@
 <div id="specificthread">
-  <h3><%= thread.title %></h3>
-  <h4>Posted By: <%= thread.author %></h4>
-  <h5>Date Created: <%= thread.date %></h5>
-  <h6><%= thread.body %></h6>
+  <h3 class"threadTitle"><%= thread.title %></h3>
+  <h4 class="threadAuthor">Posted By: <%= thread.author %></h4>
+  <h5 class="threadDate">Date Created: <%= thread.date %></h5>
+  <h6 class="threadBody"><%= thread.body %></h6>
   <% if (thread.comments) { %>
       <% for (var i = 0; i < thread.comments.length; i++) { %>
-          <h6><%= thread.comments[i] %></h6>
+          <h6><%= thread.comments[i].body %></h6>
+          <h7>Posted By <%= thread.comments[i].author %></h7>
       <% } %>
   <% } else { %>
       <h6>There are currently no comments</h6>
@@ -18,12 +19,23 @@
            placeholder="comment"><br/>
     <input type="submit" value="Post Comment">
   </form>
+  <form action="/threads/<%= thread._id %>/like?_method=PATCH" method="post">
+      <button type="submit" name="thread[likeCount]" value="+1" placeholder="+1" class="btn btn-success btn-sm">
+      </button>
+  </form>
+  <form action="/threads/<%= thread._id %>/dislike?_method=PATCH" method="post">
+        <button type="submit" name="thread[likeCount]" value="-1" placeholder="-1" class="btn btn-danger btn-sm">
+        </button>
+  </form>
 <% if (currentUser == undefined) { %>
   <a href="/">Back to Homepage</a>
 <% } else if (currentUser.username === thread.author) { %>
+  <br/>
+  <a class="btn btn-warning" href="/threads/<%= thread._id %>/edit" role="button">Edit this Thread</a>
   <form action="/threads/<%= thread._id %>?_method=DELETE"
       method="post">
-  <input type="submit" value="Delete Thread"><br/>
+  <button type="submit" class="btn btn-danger">Delete Thread</button>
+  <br/>
   <a href="/thread">Back to Homepage</a>
 <% } else if (currentUser) { %>
   <a href="/thread">Back to Homepage</a>

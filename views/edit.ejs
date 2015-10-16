@@ -1,0 +1,22 @@
+<div id="threadMaking">
+<form action="/threads/<%= thread._id %>/edit?_method=PATCH" method="post">
+  <div class="form-group">
+    <label for="threadTitle" class="sr-only">Title</label>
+    <p class="form-control-static"><%= thread.title %></p>
+  </div>
+  <div class="form-group">
+    <label for="threadBody">Body</label>
+    <textarea class="form-control"
+              id="threadBody"
+              rows="6"
+              name="thread[body]"
+              placeholder="Write your thoughts..">
+              <%= thread.body %>
+    </textarea>
+  </div>
+  <button type="submit" class="btn btn-success">Edit your thoughts!</button>
+</form>
+<h6>
+  Back to <a href="/threads/<%= thread._id %>">Thread</a>
+</h6>
+</div>

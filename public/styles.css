@@ -3,6 +3,44 @@
 }
 
 #login {
-  margin-left: 1%;
-  margin-top: 1%;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+#threadMaking {
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+#specificthread {
+  margin-left: 1em;
+}
+
+.thread {
+  background-color: lightgrey;
+  margin-left: 1em;
+}
+
+.threadName {
+  color: ;
+}
+
+.comment {
+  color: white;
+}
+
+.threadTitle {
+  font-size: 1.2em;
+}
+
+.threadAuthor {
+  font-size: 0.8em;
+}
+
+.threadDate {
+  font-size: 0.6em;
+}
+
+.threadBody {
+  font-size: 1 em;
 }
