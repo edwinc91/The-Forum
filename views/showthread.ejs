@@ -1,3 +1,42 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand ga-font" id="ga-color" href="/">The Forum</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div>
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="/threads/new">New Thread <span class="sr-only">(current)</span></a>
+        </li>
+        <li>
+          <a href="/threads/trending">Trending</a>
+        </li>
+      </ul>
+    </div>
+    <div class="pull-right">
+      <ul class="nav navbar-nav">
+        <li>
+          <% if (currentUser == undefined) { %>
+          <a href="/login">Log in</a>
+          <% } else if (currentUser) { %>
+          <a href="/">Logout</a>
+          <% } %>
+        </li>
+      </ul>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+
 <div id="specificthread">
   <h3 class"threadTitle"><%= thread.title %></h3>
   <h4 class="threadAuthor">Posted By: <%= thread.author %></h4>
@@ -14,10 +53,11 @@
 </div>
 <div>
   <form action="/threads/<%= thread._id %>/comments?_method=PATCH" method="post">
-    <input type="text"
+    <input class="comments"
+           type="text"
            name="thread[comments]"
            placeholder="comment"><br/>
-    <input type="submit" value="Post Comment">
+    <input class="commentButton" type="submit" value="Post Comment">
   </form>
   <form action="/threads/<%= thread._id %>/like?_method=PATCH" method="post">
       <button type="submit" name="thread[likeCount]" value="+1" placeholder="+1" class="btn btn-success btn-sm">
@@ -28,17 +68,19 @@
         </button>
   </form>
 <% if (currentUser == undefined) { %>
-  <a href="/">Back to Homepage</a>
+  <!-- <a href="/">Back to Homepage</a> -->
 <% } else if (currentUser.username === thread.author) { %>
   <br/>
-  <a class="btn btn-warning" href="/threads/<%= thread._id %>/edit" role="button">Edit this Thread</a>
+  <a class="btn btn-warning buttons" href="/threads/<%= thread._id %>/edit" role="button">Edit this Thread</a>
   <form action="/threads/<%= thread._id %>?_method=DELETE"
       method="post">
-  <button type="submit" class="btn btn-danger">Delete Thread</button>
+  <button type="submit" class="btn btn-danger buttons">Delete Thread</button>
   <br/>
-  <a href="/thread">Back to Homepage</a>
+  <p>
+    <!-- <a class="homepageLink" href="/thread">Back to Homepage</a> -->
 <% } else if (currentUser) { %>
-  <a href="/thread">Back to Homepage</a>
+    <!-- <a class="homepageLink" href="/thread">Back to Homepage</a> -->
 <% } %>
+  </p>
   </form>
 </div>

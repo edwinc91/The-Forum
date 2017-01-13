@@ -76,6 +76,7 @@ server.get('/threads/trending', function (req, res) {
       console.log(err);
     } else {
       res.render('trending', {
+        currentUser: req.session.user,
         threads: trendingThreads
       });
     }
@@ -227,7 +228,8 @@ server.post('/register', function (req, res) {
     if (err) {
       console.log(err);
     } else {
-    res.redirect(302, "/login");
+    res.redirect(302, "/thread");
+    // was directing to /login, changed to /thread
     }
   });
 });

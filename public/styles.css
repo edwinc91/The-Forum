@@ -1,3 +1,7 @@
+body {
+  background: #BCED91;
+}
+
 .form-control {
   width: 80%;
 }
@@ -17,12 +21,27 @@
 }
 
 .thread {
-  background-color: lightgrey;
+  background-color: #ff4c4c;
+  /*background-color: #ff6666*/
   margin-left: 1em;
+  margin-right: 10em;
+}
+
+.button {
+  float: left;
+  margin-left: 1em;
+  margin-right: 0.5em;
+  margin-top: 1em;
+}
+
+.buttons {
+  float: left;
+  margin-left: 0.5em;
+  margin-top: 1em;
 }
 
 .threadName {
-  color: ;
+  color: pink;
 }
 
 .comment {
@@ -42,5 +61,13 @@
 }
 
 .threadBody {
-  font-size: 1 em;
+  font-size: 1em;
+}
+
+.commentButton {
+  margin: 1em;
+}
+
+.comments {
+  margin-left: 1em;
 }
