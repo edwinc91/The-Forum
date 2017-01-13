@@ -16,7 +16,11 @@
       <div>
       <ul class="nav navbar-nav">
         <li>
+          <% if (currentUser == undefined) { %>
+
+          <% } else if (currentUser) { %>
           <a href="/threads/new">New Thread <span class="sr-only">(current)</span></a>
+          <% } %>
         </li>
         <li>
           <a href="/threads/trending">Trending</a>
