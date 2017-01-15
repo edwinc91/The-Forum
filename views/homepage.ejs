@@ -38,7 +38,7 @@
 
 <% threads.forEach(function (thread, i) { %>
   <div class = "thread">
-    <h3>
+    <h3 class="likeDisplay">
     <%= thread.likeCount %>
     <a href="/threads/<%= thread._id %>" class="threadName"><%= thread.title %> </a>
     </h3>

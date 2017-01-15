@@ -102,3 +102,22 @@ textarea.comments {
   width: 550px;
   height: 120px;
 }
+
+h2.threadBody {
+  margin-left: 0.5em;
+}
+
+a.threadNameLink {
+    color: black;
+    text-decoration: none;
+}
+
+a.threadNameLink:hover {
+   color: silver;
+   text-decoration:none;
+   cursor:pointer;
+}
+
+h3.likeDisplay {
+  color:#F2F2F2;
+}

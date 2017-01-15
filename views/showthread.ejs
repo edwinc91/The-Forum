@@ -46,10 +46,11 @@
 </nav>
 
 <div id="specificthread">
-  <h1 class"threadTitle"><%= thread.title %></h1>
+  <a class="threadNameLink" href="/threads/<%= thread._id %>"><h1 class"threadTitle"> <%= thread.title %></h1></a>
+  <p class="threadAuthor">Posted By: <%= thread.author %>
+  <span class="threadDate">on <%= thread.date %></span>
+</p>
   <h2 class="threadBody"><%= thread.body %></h2>
-  <h3 class="threadAuthor">Posted By: <%= thread.author %></h3>
-  <h4 class="threadDate">Date Created: <%= thread.date %></h4>
   <br/>
 </div>
   <form id="likes" class="firstButton" action="/threads/<%= thread._id %>/like?_method=PATCH" method="post">
@@ -59,14 +60,14 @@
     <input type="submit" name="thread[likeCount]" value="-1" placeholder="-1" class="btn btn-danger btn-sm">
   </form>
 <div id="commentSection">
-  <% if (thread.comments) { %>
-    <h4 class="commentHeader"> Comments </h4>
-      <% for (var i = 0; i < thread.comments.length; i++) { %>
-          <h5 class="commentBody"> -> <%= thread.comments[i].body %></h5>
-          <h6 class="commentAuthor"> Posted by <%= thread.comments[i].author %></h6>
-      <% } %>
+  <h4 class="commentHeader"> Comments </h4>
+  <% if (thread.comments.length == '0') { %>
+    <h5 class="commentBody"> There are no comments.</h5>
   <% } else { %>
-      <h6>There are currently no comments</h6>
+    <% for (var i = 0; i < thread.comments.length; i++) { %>
+      <h5 class="commentBody"> -> <%= thread.comments[i].body %></h5>
+      <h6 class="commentAuthor"> Posted by <%= thread.comments[i].author %></h6>
+    <% } %>
   <% } %>
 </div>
 <div>
@@ -80,7 +81,6 @@
   <% if (currentUser == undefined) { %>
   <!-- <a href="/">Back to Homepage</a> -->
   <% } else if (currentUser.username === thread.author) { %>
-    <br/>
     <a class="btn btn-warning buttons firstButton" href="/threads/<%= thread._id %>/edit" role="button">Edit this Thread</a>
     <form action="/threads/<%= thread._id %>?_method=DELETE"
         method="post">
