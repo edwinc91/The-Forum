@@ -17,7 +17,6 @@ var threadSchema = new Schema({
   date: { type: Date, default: Date.now },
   body: { type: String, required: true },
   comments: [{ author: String, body: String, date: { type: Date, default: Date.now }}],
-  // comments: [String],
   likeCount: { type: Number, default: 0 }
 }, {collection: 'forum_thread_list', strict: true});
 
@@ -71,7 +70,7 @@ server.get('/thread', function (req, res) {
 });
 
 server.get('/threads/trending', function (req, res) {
-  Thread.find().sort({votes:-1}).exec(function (err, trendingThreads) {
+  Thread.find().sort({likeCount:-1}).exec(function (err, trendingThreads) {
     if (err) {
       console.log(err);
     } else {
@@ -105,7 +104,7 @@ server.get('/threads/:id/edit', function (req, res) {
 });
 
 server.patch('/threads/:id/comments', function (req, res) {
-  console.log(req.session);
+  // console.log(req.session);
   console.log(req.session.user.username);
   console.log(req.body.thread);
   var threadComments = {$push: {comments: { author: req.session.user.username, body: req.body.thread.comments }}};
@@ -133,8 +132,9 @@ server.patch('/threads/:id/edit', function (req, res) {
 });
 
 server.patch('/threads/:id/like', function (req, res) {
-  var likeIt = {$inc: { votes: req.body.thread.count } };
-  Thread.findByIdAndUpdate(req.params.id, likeIt, function (err, updatedThreadLikeCount) {
+  console.log(req.body.thread);
+  var likeChoice = {$inc: { likeCount: req.body.thread.likeCount } };
+  Thread.findByIdAndUpdate(req.params.id, likeChoice, function (err, updatedThreadLikeCount) {
     if (err) {
       console.log(err);
     } else {
@@ -144,8 +144,8 @@ server.patch('/threads/:id/like', function (req, res) {
 });
 
 server.patch('/threads/:id/dislike', function (req, res) {
-  var dislikeIt = {$inc: { votes: req.body.thread.count } };
-  Thread.findByIdAndUpdate(req.params.id, dislikeIt, function (err, updatedThreadLikeCount) {
+  var likeChoice = {$inc: { likeCount: req.body.thread.likeCount } };
+  Thread.findByIdAndUpdate(req.params.id, likeChoice, function (err, updatedThreadLikeCount) {
     if (err) {
       console.log(err);
     } else {

@@ -64,12 +64,10 @@
     <input class="commentButton" type="submit" value="Post Comment">
   </form>
   <form action="/threads/<%= thread._id %>/like?_method=PATCH" method="post">
-      <button type="submit" name="thread[likeCount]" value="+1" placeholder="+1" class="btn btn-success btn-sm">
-      </button>
+    <input type="submit" name="thread[likeCount]" value="+1" placeholder="+1" class="btn btn-success btn-sm">
   </form>
   <form action="/threads/<%= thread._id %>/dislike?_method=PATCH" method="post">
-        <button type="submit" name="thread[likeCount]" value="-1" placeholder="-1" class="btn btn-danger btn-sm">
-        </button>
+    <input type="submit" name="thread[likeCount]" value="-1" placeholder="-1" class="btn btn-danger btn-sm">
   </form>
 <% if (currentUser == undefined) { %>
   <!-- <a href="/">Back to Homepage</a> -->
