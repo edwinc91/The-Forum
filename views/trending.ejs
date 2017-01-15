@@ -8,7 +8,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <% if (currentUser == undefined) { %>
       <a class="navbar-brand ga-font" id="ga-color" href="/">The Forum</a>
+      <% } else if (currentUser) { %>
+      <a class="navbar-brand ga-font" id="ga-color" href="/thread">The Forum</a>
+      <% } %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,7 +48,7 @@
 <% threads.forEach(function (thread, i) { %>
   <div class = "thread">
     <h3>
-    <%= thread.likeCount %> 
+    <%= thread.likeCount %>
     <a href="/threads/<%= thread._id %>" class="threadName"><%= thread.title %> </a>
     </h3>
     <h6>
@@ -58,26 +62,3 @@
     </h6>
   </div>
 <% }) %>
-
-<!-- <% threads.forEach(function (thread, i) { %>
-  <div class = "thread">
-    <h3>
-      <a href="/threads/<%= thread._id %>" class="threadName"><%= thread.title %> </a>
-    </h3> -->
-    <!--
-<% if (thread.comments.length == 0) { %>
-  <h6>
-    <a href="/threads/<%= thread._id %>" class="comment"> comment </a>
-  </h6>
-<% } else if (thread.comments.length == 1) { %>
-  <h6>
-    <a href="/threads/<%= thread._id %>" class="comment"><%= thread.comments.length %> comment </a>
-  </h6>
-<% } else { %>
-  <h6>
-    <a href="/threads/<%= thread._id %>" class="comment"><%= thread.comments.length %> comments </a>
-  </h6>
-<% } %>
-  <h6><%= thread.likeCount %></h6>
-  </div>
-<% }) %> -->

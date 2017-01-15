@@ -242,6 +242,7 @@ server.get('/', function (req, res) {
     } else {
       req.session.destroy();
       res.render('homepage', {
+      // currentUser: req.session.user,
       threads: allThreads
       });
     }

@@ -8,7 +8,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <% if (currentUser == undefined) { %>
       <a class="navbar-brand ga-font" id="ga-color" href="/">The Forum</a>
+      <% } else if (currentUser) { %>
+      <a class="navbar-brand ga-font" id="ga-color" href="/thread">The Forum</a>
+      <% } %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,6 +60,7 @@
   <% } %>
 </div>
 <div>
+  <% if (currentUser) { %>    
   <form action="/threads/<%= thread._id %>/comments?_method=PATCH" method="post">
     <input class="comments"
            type="text"
@@ -63,6 +68,7 @@
            placeholder="comment"><br/>
     <input class="commentButton" type="submit" value="Post Comment">
   </form>
+  <% } %>
   <form action="/threads/<%= thread._id %>/like?_method=PATCH" method="post">
     <input type="submit" name="thread[likeCount]" value="+1" placeholder="+1" class="btn btn-success btn-sm">
   </form>
