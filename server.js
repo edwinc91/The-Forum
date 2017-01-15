@@ -132,6 +132,7 @@ server.patch('/threads/:id/edit', function (req, res) {
 });
 
 server.patch('/threads/:id/like', function (req, res) {
+  console.log(req.body)
   console.log(req.body.thread);
   var likeChoice = {$inc: { likeCount: req.body.thread.likeCount } };
   Thread.findByIdAndUpdate(req.params.id, likeChoice, function (err, updatedThreadLikeCount) {

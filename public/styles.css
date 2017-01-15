@@ -17,7 +17,8 @@ body {
 }
 
 #specificthread {
-  margin-left: 1em;
+  margin-left: 5em;
+  margin-right: 5em;
 }
 
 .thread {
@@ -48,26 +49,56 @@ body {
   color: white;
 }
 
-.threadTitle {
-  font-size: 1.2em;
-}
+/*.threadTitle {
+  font-size: 30px;
+}*/
 
 .threadAuthor {
-  font-size: 0.8em;
+  font-size: 12px;
 }
 
 .threadDate {
-  font-size: 0.6em;
+  font-size: 10px;
 }
 
 .threadBody {
-  font-size: 1em;
+  font-size: 20px;
 }
 
 .commentButton {
   margin: 1em;
 }
 
-.comments {
+/*.comments {
   margin-left: 1em;
+}*/
+
+.commentHeader {
+  font-size: 14px;
+}
+
+.commentBody {
+  font-size: 12px;
+}
+
+.commentAuthor {
+  font-size: 10px;
+}
+
+#commentSection {
+  margin-left: 6em;
+  margin-right: 6em;
+}
+
+form#likes {
+  display: inline-block;
+}
+
+.firstButton {
+  margin-left: 6em;
+}
+
+textarea.comments {
+  width: 550px;
+  height: 120px;
 }
