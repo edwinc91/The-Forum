@@ -1,3 +1,5 @@
+<h2> The Forum </h2>
+
 This is a basic forum I designed using Express.js, Node, and Mongoose.
 
 Users can register and create topics where they and other users can comment 
