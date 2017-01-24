@@ -30,7 +30,7 @@ var userSchema = new Schema({
 var User = mongoose.model("User", userSchema);
 
 server.get('/secret-test', function (req, res) {
-  res.write("Welcome to this app bitchezzzzzz");
+  res.write("Welcome to this app");
   res.end();
 });
 
@@ -43,7 +43,7 @@ server.set('views', './views');
 server.set('view engine', 'ejs');
 
 server.use(session({
-  secret: "thisismysecretysecretduuudeyou'renevergonnafindthisoutsodonteventryyyn00000b",
+  secret: "itsasecret!!!!!!",
   resave: true,
   saveUninitialized: false
 }));
