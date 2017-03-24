@@ -1,5 +1,5 @@
 body {
-  background: #BCED91;
+  background: #50C878;
 }
 
 .form-control {
@@ -22,7 +22,7 @@ body {
 }
 
 .thread {
-  background-color: #ff4c4c;
+  background-color: #c850a0;
   /*background-color: #ff6666*/
   margin-left: 1em;
   margin-right: 10em;
@@ -107,6 +107,10 @@ h2.threadBody {
   margin-left: 0.5em;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 a.threadNameLink {
     color: black;
     text-decoration: none;
@@ -114,8 +118,6 @@ a.threadNameLink {
 
 a.threadNameLink:hover {
    color: silver;
-   text-decoration:none;
-   cursor:pointer;
 }
 
 h3.likeDisplay {
