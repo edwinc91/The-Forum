@@ -47,9 +47,7 @@
 
 <div id="specificthread">
   <a class="threadNameLink" href="/threads/<%= thread._id %>"><h1 class"threadTitle"> <%= thread.title %></h1></a>
-  <p class="threadAuthor">Posted By: <%= thread.author %>
-  <span class="threadDate">on <%= thread.date %></span>
-</p>
+  <p class="threadAuthor">submitted <%= thread.date %> by <span class=thread-author><%= thread.author %></span></p>
   <h2 class="threadBody"><%= thread.body %></h2>
   <br/>
 </div>
@@ -65,8 +63,10 @@
     <h5 class="commentBody"> There are no comments.</h5>
   <% } else { %>
     <% for (var i = 0; i < thread.comments.length; i++) { %>
-      <h5 class="commentBody"> -> <%= thread.comments[i].body %></h5>
-      <h6 class="commentAuthor"> Posted by <%= thread.comments[i].author %></h6>
+      <div class="each-comment">
+        <h6 class="commentAuthor"><%= thread.comments[i].author %></h6>
+        <h5 class="commentBody"> > <%= thread.comments[i].body %></h5>
+      </div>
     <% } %>
   <% } %>
 </div>

@@ -1,5 +1,6 @@
 body {
-  background: #50C878;
+  /*background: #50C878;*/
+  background: black;
 }
 
 .form-control {
@@ -22,9 +23,8 @@ body {
 }
 
 .thread {
-  background-color: #c850a0;
-  /*background-color: #ff6666*/
-  margin-left: 1em;
+  /*background-color: #c850a0;*/
+  margin-left: 3em;
   margin-right: 10em;
 }
 
@@ -42,11 +42,11 @@ body {
 }
 
 .threadName {
-  color: pink;
+  color: #3232ff;
 }
 
 .comment {
-  color: white;
+  color: #3232ff;
 }
 
 /*.threadTitle {
@@ -79,15 +79,21 @@ body {
 
 .commentBody {
   font-size: 12px;
+  color: white;
 }
 
 .commentAuthor {
-  font-size: 10px;
+  font-size: 16px;
+  color: #3232ff;
 }
 
 #commentSection {
   margin-left: 6em;
   margin-right: 6em;
+}
+
+.each-comment {
+  border: 1px solid gray;
 }
 
 form#likes {
@@ -105,6 +111,9 @@ textarea.comments {
 
 h2.threadBody {
   margin-left: 0.5em;
+  color: white;
+  border: 1px solid gray;
+  padding: 0.5em;
 }
 
 a:hover {
@@ -112,14 +121,28 @@ a:hover {
 }
 
 a.threadNameLink {
-    color: black;
-    text-decoration: none;
+  color: #3232ff;
+  text-decoration: none;
 }
 
 a.threadNameLink:hover {
-   color: silver;
+  color: silver;
 }
 
 h3.likeDisplay {
-  color:#F2F2F2;
+  /*color:#F2F2F2;*/
+  color: gray;
+  margin-bottom: 0;
+}
+
+.thread > h6 {
+  margin-top: 0;
+}
+
+.thread > span {
+  font-size: 0.8em;
+}
+
+.thread-author {
+  color: #3232ff;
 }

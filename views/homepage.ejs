@@ -42,6 +42,7 @@
     <%= thread.likeCount %>
     <a href="/threads/<%= thread._id %>" class="threadName"><%= thread.title %> </a>
     </h3>
+    <span> submitted <%= thread.date %> by </span><span class="thread-author"><%= thread.author %> </span>
     <h6>
       <a href="/threads/<%= thread._id %>" class="comment"><%= thread.comments.length %>
         <% if (thread.comments.length == 1) { %>
